@@ -4,10 +4,19 @@ from .gs import GsClient
 from .hf import hf_get_from_cache
 from .http import HttpClient
 from .r2 import R2Client
+from .b2 import B2Client
 from .s3 import S3Client
 from .scheme_client import SchemeClient
 
-__all__ = ["GsClient", "HttpClient", "S3Client", "R2Client", "SchemeClient", "hf_get_from_cache"]
+__all__ = [
+    "GsClient",
+    "HttpClient",
+    "B2Client",
+    "S3Client",
+    "R2Client",
+    "SchemeClient",
+    "hf_get_from_cache",
+]
 
 try:
     from .beaker import BeakerClient
@@ -37,7 +46,7 @@ def add_scheme_client(client: Type[SchemeClient]) -> None:
         raise ValueError(f"Unexpected type for {client} scheme: {client.scheme}")
 
 
-for client in (HttpClient, S3Client, R2Client, GsClient):
+for client in (HttpClient, B2Client, S3Client, R2Client, GsClient):
     add_scheme_client(client)  # type: ignore
 if BeakerClient is not None:
     add_scheme_client(BeakerClient)
